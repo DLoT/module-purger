@@ -8,7 +8,7 @@ console.log(__dirname);
 
 const
   entrypoint        = path.join(__dirname, 'test-module.js'),
-  targetDir         = './dist',
+  targetDir         = './test-dist',
   rootDir           = path.join(__dirname, '..'),
   additionalModules = ['debug'],
 
@@ -36,6 +36,7 @@ purger(options, () => {
   console.log('purged');
   const modulesContent = fs.readdirSync(`${targetDir}/node_modules`);
   assert.deepEqual(modulesContent, ['commander','debug', 'ms']);
+
   process.exit(0);
 });
 
