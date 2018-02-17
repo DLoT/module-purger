@@ -1,0 +1,10 @@
+language: node_js
+
+php:
+  - lts/*
+
+before_script:
+  - npm install
+
+script:
+  - npm test
