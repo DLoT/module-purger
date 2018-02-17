@@ -18,7 +18,7 @@ if (fs.existsSync(nodeModulesPaths)) {
 Module._load = function (request, parent, isMain) {
   const filePath = Module._resolveFilename(request, parent);
 
-  console.log('required modle', (filePath))
+  console.log('required modle', (filePath));
 
   fs.appendFileSync(nodeModulesPaths, `${filePath}\n`);
 
