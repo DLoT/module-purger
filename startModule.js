@@ -24,12 +24,12 @@ require('./loadModuleHook');
 
 process.stderr.on('data', function (err) {
   if (err) {
-    console.log('STDERR:', err);
+    debug('STDERR: [%o]', err);
   }
 });
 
 process.stdout.on('data', function (data) {
-  console.log('STDOUT:', data);
+  debug('STDOUT: [%o]', data);
 });
 
 // load additional modules

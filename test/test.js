@@ -10,7 +10,7 @@ const
   entrypoint        = path.join(__dirname, 'test-module.js'),
   targetDir         = './test-dist',
   rootDir           = path.join(__dirname, '..'),
-  additionalModules = ['debug'],
+  additionalModules = ['ms'],
 
   options           = {
     entrypoint,
@@ -24,7 +24,7 @@ console.log(options);
 
 process.stderr.on('data', function (err) {
   if (err) {
-    console.log('DASD', err);
+    console.log('DASD', err.toString());
   }
 });
 
@@ -35,7 +35,7 @@ process.stdout.on('data', function (data) {
 purger(options, () => {
   console.log('purged');
   const modulesContent = fs.readdirSync(`${targetDir}/node_modules`);
-  assert.deepEqual(modulesContent, ['commander','debug', 'ms']);
+  assert.deepEqual(modulesContent, ['commander', 'ms']);
 
   process.exit(0);
 });
