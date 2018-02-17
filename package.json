@@ -1,0 +1,23 @@
+{
+  "name": "module-purger",
+  "version": "1.0.0",
+  "description": "Purge your node modules from superfluous files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DLoT/module-purger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DLoT/module-purger/issues"
+  },
+  "homepage": "https://github.com/DLoT/module-purger#readme",
+  "dependencies": {
+    "commander": "^2.14.1",
+    "ncp": "^2.0.0"
+  }
+}
