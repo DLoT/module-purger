@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/test.js && rm -rf ./test-dist"
+    "test": "node ./test/test.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/DLoT/module-purger#readme",
   "dependencies": {
     "commander": "^2.14.1",
-    "ncp": "^2.0.0"
+    "fs-extra": "^5.0.0",
+    "glob-all": "^3.1.0"
   },
   "devDependencies": {
     "debug": "^3.1.0"
