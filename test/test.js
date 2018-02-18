@@ -1,8 +1,8 @@
 'use strict';
-const path               = require('path'),
-      assert             = require('assert'),
-      fs                 = require('fs'),
-      purge = require('../');
+const path   = require('path'),
+      assert = require('assert'),
+      fs     = require('fs'),
+      purge  = require('../');
 
 const
   entrypoint        = path.join(__dirname, 'test-module.js'),
@@ -15,14 +15,15 @@ const
     targetPath,
     rootPath,
     additionalModules,
-    manualCopies: [],
+    excludedModules: undefined,
   };
 
 purge(options).then(() => {
   console.log('Successfully purged');
-  const modulesContent = fs.readdirSync(`${options.targetPath}/node_modules`);
+  const purgedModules  = path.join(rootPath, options.targetPath, 'node_modules'),
+        modulesContent = fs.readdirSync(purgedModules);
   assert.deepEqual(modulesContent, ['commander', 'ms']);
 
-});
+}).catch(error => console.error(error));
 
 
