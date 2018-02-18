@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/test.js"
+    "test": "node ./test/test.js && rm -r ./test-dist"
   },
   "repository": {
     "type": "git",

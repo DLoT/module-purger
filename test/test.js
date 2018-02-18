@@ -19,10 +19,10 @@ const
   };
 
 purge(options).then(() => {
-  console.log('purged');
-//   const modulesContent = fs.readdirSync(`${targetDir}/node_modules`);
-//   assert.deepEqual(modulesContent, ['commander', 'ms']);
-//
-//   process.exit(0);
- });
+  console.log('Successfully purged');
+  const modulesContent = fs.readdirSync(`${options.targetPath}/node_modules`);
+  assert.deepEqual(modulesContent, ['commander', 'ms']);
+
+});
+
 
