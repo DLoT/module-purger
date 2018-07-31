@@ -22,8 +22,8 @@ purge(options).then(() => {
   console.log('Successfully purged');
   const purgedModules  = path.join(rootPath, options.targetPath, 'node_modules'),
         modulesContent = fs.readdirSync(purgedModules);
-  assert.deepEqual(modulesContent, ['commander', 'ms']);
 
-}).catch(error => console.error(error));
+  assert.deepEqual(modulesContent, ['commander', 'ms']);
+}).catch(console.error);
 
 
