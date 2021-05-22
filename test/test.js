@@ -28,7 +28,7 @@ purge(options).then(() => {
   const acmePath    = path.join(purgedModules, '@acme', 'example');
   const acmeContent = fs.readdirSync(acmePath);
 
-  assert.deepEqual(acmeContent, ['index.js']);
+  assert.deepEqual(acmeContent, ['LICENSE.md', 'index.js', 'package.json']);
 
   const commanderPath    = path.join(purgedModules, 'commander');
   const commanderContent = fs.readdirSync(commanderPath);
