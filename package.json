@@ -26,6 +26,7 @@
     "glob": "^7.1.6"
   },
   "devDependencies": {
+    "@acme/example": "file:test/packages/acme-example-1.0.0.tgz",
     "debug": "^4.2.0"
   }
 }
