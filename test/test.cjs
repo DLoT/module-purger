@@ -1,27 +1,27 @@
 'use strict';
-const path   = require('path'),
-      assert = require('assert'),
-      fs     = require('fs'),
-      purge  = require('../');
+const path   = require('path');
+const assert = require('assert');
+const fs     = require('fs');
+const purge  = require('../');
 
-const
-  entrypoint        = path.join(__dirname, 'test-module.js'),
-  rootPath          = path.join(__dirname, '..'),
-  targetPath        = 'test-dist',
-  additionalModules = ['ms'],
+const entrypoint        = path.join(__dirname, 'test-module.cjs');
+const rootPath          = path.join(__dirname, '..');
+const targetPath        = 'test-dist';
+const additionalModules = ['ms'];
 
-  options           = {
-    entrypoint,
-    targetPath,
-    rootPath,
-    additionalModules,
-    excludedModules: undefined,
-  };
+const options = {
+  entrypoint,
+  targetPath,
+  rootPath,
+  additionalModules,
+  isEsm:           false,
+  excludedModules: undefined,
+};
 
 purge(options).then(() => {
   console.log('Successfully purged');
-  const purgedModules  = path.join(rootPath, options.targetPath, 'node_modules'),
-        modulesContent = fs.readdirSync(purgedModules);
+  const purgedModules  = path.join(rootPath, options.targetPath, 'node_modules');
+  const modulesContent = fs.readdirSync(purgedModules);
 
   assert.deepStrictEqual(modulesContent, ['@acme', 'commander', 'ms']);
 

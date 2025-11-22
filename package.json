@@ -2,12 +2,18 @@
   "name": "module-purger",
   "version": "1.0.3",
   "description": "Purge your node modules from superfluous files.",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js"
+  },
   "engines": {
     "node": ">=4.0.0"
   },
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/test.js && rm -r ./test-dist"
+    "test": "npm run test-cjs && npm run test-esm",
+    "test-cjs": "node ./test/test.cjs && rm -r ./test-dist",
+    "test-esm": "node ./test/test.mjs && rm -r ./test-dist"
   },
   "repository": {
     "type": "git",
