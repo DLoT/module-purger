@@ -29,3 +29,6 @@ jobs:
 
       - name: Run Tests
         run: npm test
+        env:
+          # This forces Node 18 to behave like Node 20 regarding resolution
+          NODE_OPTIONS: "--experimental-import-meta-resolve"
