@@ -31,7 +31,8 @@
     "glob": "13.0.0"
   },
   "devDependencies": {
-    "@acme/example": "file:test/packages/acme-example-1.0.0.tgz",
+    "@acme/loaded": "file:test/packages/acme-loaded-1.0.0.tgz",
+    "@acme/additional": "file:test/packages/acme-additional-1.0.0.tgz",
     "debug": "4.4.3"
   }
 }

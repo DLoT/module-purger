@@ -1,22 +1,23 @@
 import { after, before, describe, it } from 'node:test';
-import path from 'node:path';
+import { dirname, join } from 'node:path';
 import assert from 'node:assert';
-import fs from 'node:fs/promises';
+import { readdir, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import purge from '../index.mjs';
 
 const filename = fileURLToPath(import.meta.url);
-const dirname  = path.dirname(filename);
+
+const currentDir = dirname(filename);
 
 const targetPath    = 'test-dist';
-const rootPath      = path.join(dirname, '..');
-const purgedModules = path.join(rootPath, targetPath, 'node_modules');
+const rootPath      = join(currentDir, '..');
+const purgedModules = join(rootPath, targetPath, 'node_modules');
 
-const additionalModules = ['ms'];
+const additionalModules = ['@acme/additional'];
 
 
 describe('ESM', () => {
-  const entrypoint = path.join(dirname, 'entrypoint.mjs');
+  const entrypoint = join(currentDir, 'entrypoint.mjs');
 
   const options = {
     entrypoint,
@@ -32,44 +33,47 @@ describe('ESM', () => {
   });
 
   after(async () => {
-    await fs.rm(path.join(rootPath, targetPath), { recursive: true, force: true })
+    await rm(join(rootPath, targetPath), { recursive: true })
   });
 
-  it('should copy imported module and the additionalModules', async () => {
-    const modulesContent = await fs.readdir(purgedModules);
-
-    assert.deepStrictEqual(modulesContent.sort(), ['@acme', 'ms']);
-  });
-
-  describe('imported in module', () => {
-    const acmePath = path.join(purgedModules, '@acme', 'example');
+  describe('loaded in app', () => {
+    const modulePath = join(purgedModules, '@acme', 'loaded');
 
     it('should include all relevant files of the module', async () => {
-      const acmeContent = await fs.readdir(acmePath);
+      const fileList = await readdir(modulePath);
 
-      assert.deepStrictEqual(acmeContent, ['LICENSE.md', 'index.mjs', 'lib', 'package.json']);
+      assert.deepStrictEqual(fileList, ['LICENSE.md', 'index.mjs', 'lib', 'package.json']);
     });
 
     it('should include the children', async () => {
-      const acmeLibPath    = path.join(acmePath, 'lib');
-      const acmeLibContent = await fs.readdir(acmeLibPath);
+      const libPath  = join(modulePath, 'lib');
+      const fileList = await readdir(libPath);
 
-      assert.deepStrictEqual(acmeLibContent, ['required-file.js']);
+      assert.deepStrictEqual(fileList, ['required-file.js']);
     });
   });
 
   describe('additionalModules', () => {
-    it('should include all relevant files of the module', async () => {
-      const msPath    = path.join(purgedModules, 'ms');
-      const msContent = await fs.readdir(msPath);
+    const modulePath = join(purgedModules, '@acme', 'additional');
 
-      assert.deepStrictEqual(msContent, ['index.js', 'license.md', 'package.json']);
+    it('should include all relevant files of the module', async () => {
+      const fileList = await readdir(modulePath);
+
+      assert.deepStrictEqual(fileList, ['LICENSE.md', 'index.mjs', 'lib', 'package.json']);
     });
+
+    it('should include the children', async () => {
+      const libPath  = join(modulePath, 'lib');
+      const fileList = await readdir(libPath);
+
+      assert.deepStrictEqual(fileList, ['required-file.js']);
+    });
+
   });
 });
 
 describe('CJS', () => {
-  const entrypoint = path.join(dirname, 'entrypoint.cjs');
+  const entrypoint = join(currentDir, 'entrypoint.cjs');
 
   const options = {
     entrypoint,
@@ -85,38 +89,40 @@ describe('CJS', () => {
   });
 
   after(async () => {
-    await fs.rm(path.join(rootPath, targetPath), { recursive: true, force: true })
+    await rm(join(rootPath, targetPath), { recursive: true })
   });
 
-  it('should copy required modules and the additionalModules', async () => {
-    const modulesContent = await fs.readdir(purgedModules);
-
-    assert.deepStrictEqual(modulesContent.sort(), ['@acme', 'ms']);
-  });
-
-  describe('required', () => {
-    const acmePath = path.join(purgedModules, '@acme', 'example');
+  describe('loaded in app', () => {
+    const modulePath = join(purgedModules, '@acme', 'loaded');
 
     it('should include all relevant files of the module', async () => {
-      const acmeContent = await fs.readdir(acmePath);
+      const fileList = await readdir(modulePath);
 
-      assert.deepStrictEqual(acmeContent, ['LICENSE.md', 'index.cjs', 'lib', 'package.json']);
+      assert.deepStrictEqual(fileList, ['LICENSE.md', 'index.cjs', 'lib', 'package.json']);
     });
 
     it('should include the children', async () => {
-      const acmeLibPath    = path.join(acmePath, 'lib');
-      const acmeLibContent = await fs.readdir(acmeLibPath);
+      const libPath  = join(modulePath, 'lib');
+      const fileList = await readdir(libPath);
 
-      assert.deepStrictEqual(acmeLibContent, ['required-file.js']);
+      assert.deepStrictEqual(fileList, ['required-file.js']);
     });
   });
 
   describe('additionalModules', () => {
-    it('should include all relevant files of the module', async () => {
-      const msPath    = path.join(purgedModules, 'ms');
-      const msContent = await fs.readdir(msPath);
+    const path = join(purgedModules, '@acme', 'additional');
 
-      assert.deepStrictEqual(msContent, ['index.js', 'license.md', 'package.json']);
+    it('should include all relevant files of the module', async () => {
+      const fileList = await readdir(path);
+
+      assert.deepStrictEqual(fileList, ['LICENSE.md', 'index.cjs', 'lib', 'package.json']);
+    });
+
+    it('should include the children', async () => {
+      const libPath  = join(path, 'lib');
+      const fileList = await readdir(libPath);
+
+      assert.deepStrictEqual(fileList, ['required-file.js']);
     });
   });
 });

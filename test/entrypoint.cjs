@@ -1,1 +1,1 @@
-require('@acme/example');
+require('@acme/loaded');

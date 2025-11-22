@@ -1,1 +1,1 @@
-import '@acme/example';
+import '@acme/loaded';
