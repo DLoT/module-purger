@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+import purge from '../index.mjs';
+
+import { parseArgs } from 'node:util';
+
+import dbg from 'debug';
+
+const debug = dbg('module-purger:cli');
+
+const options = {
+  help:              { type: 'boolean', short: 'h' },
+  targetPath:        { type: 'string', short: 't' },
+  rootPath:          { type: 'string', short: 'r' },
+  entrypoint:        { type: 'string', short: 'e' },
+  isEsm:             { type: 'boolean' },
+  exclude:           { type: 'string' },
+  additionalModules: { type: 'string' },
+  excludeModules:    { type: 'string' },
+};
+
+const { values } = parseArgs({ options, allowPositionals: true });
+
+if (values.help) {
+  console.log(`
+Usage: purge-node-modules -t <path> -r <path> -e <path> [options]
+
+Removes the bloat from your node_modules
+
+Required:
+  -t, --targetPath <path>       Directory where to put the result
+  -r, --rootPath <path>         Root directory of the project
+  -e, --entrypoint <path>       Script which starts your application
+
+Options:
+  --isEsm                       Use ESM (import vs require)
+  --exclude <paths>             Special paths to exclude, space-separated (quote multiple: "a b")
+  --additionalModules <modules> Modules to load first. Helpful for runtime require (quote multiple: "a b")
+  --excludeModules <modules>    Modules to exclude. Helpful for native modules and different architectures (quote multiple: "a b")
+  `);
+
+  process.exit(0);
+}
+
+const { targetPath, rootPath, entrypoint, exclude, additionalModules, excludeModules, isEsm = false } = values;
+
+
+if (!targetPath || !rootPath || !entrypoint) {
+  console.error('\nError: Missing required arguments (-t, -r, -e). Use --help for usage.\n');
+  process.exit(1);
+}
+
+const config = {
+  targetPath,
+  rootPath,
+  entrypoint,
+  isEsm,
+  exclude:           exclude?.split(' ') ?? [],
+  additionalModules: additionalModules?.split(' ') ?? [],
+  excludeModules:    excludeModules?.split(' ') ?? [],
+};
+
+
+console.log('Purge node modules for %o ', entrypoint);
+debug('Start purging with config %o', config);
+
+await purge(config);
