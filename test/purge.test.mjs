@@ -9,15 +9,14 @@ const filename = fileURLToPath(import.meta.url);
 
 const currentDir = dirname(filename);
 
-const targetPath    = 'test-dist';
-const rootPath      = join(currentDir, '..');
-const purgedModules = join(rootPath, targetPath, 'node_modules');
-
+const rootPath          = join(currentDir, '..');
 const additionalModules = ['@acme/additional'];
 
 
 describe('ESM', () => {
-  const entrypoint = join(currentDir, 'entrypoint.mjs');
+  const entrypoint    = join(currentDir, 'entrypoint.mjs');
+  const targetPath    = 'test-dist-esm';
+  const purgedModules = join(rootPath, targetPath, 'node_modules');
 
   const options = {
     entrypoint,
@@ -73,7 +72,9 @@ describe('ESM', () => {
 });
 
 describe('CJS', () => {
-  const entrypoint = join(currentDir, 'entrypoint.cjs');
+  const entrypoint    = join(currentDir, 'entrypoint.cjs');
+  const targetPath    = 'test-dist-cjs';
+  const purgedModules = join(rootPath, targetPath, 'node_modules');
 
   const options = {
     entrypoint,
