@@ -11,6 +11,8 @@ type PurgeOptions = {
   additionalModules?: string[];
   /** An array of modules to exclude */
   excludeModules?: string[];
+  /** Enable ESM mode*/
+  isEsm?: boolean;
 }
 
 /**
