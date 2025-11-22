@@ -17,7 +17,8 @@ npm install module-purger
 
 ## 📋 Requirements
 
-**Node.js** `>=18.19.0 or >=20.6.0`
+ESM **Node.js** `>=20.6.0`
+CJS **Node.js** `>=18.0.0`
 
 > **Note:** Node.js v16 and older are no longer supported due to their lack of ESM loader capabilities.
 >
