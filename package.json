@@ -1,13 +1,13 @@
 {
   "name": "module-purger",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Purge your node modules from superfluous files.",
   "exports": {
     "import": "./index.mjs",
     "require": "./index.js"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": "^18.19.0 || >=20.6.0"
   },
   "main": "index.js",
   "scripts": {

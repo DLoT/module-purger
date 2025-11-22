@@ -2,7 +2,7 @@ import path from 'node:path';
 import assert from 'node:assert';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import purge from '../index.js';
+import purge from '../index.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);

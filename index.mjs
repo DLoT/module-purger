@@ -1,1 +1,3 @@
-module.exports = require('./lib/purge');
+import modulePurger from './index.js';
+
+export default modulePurger;
