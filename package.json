@@ -6,14 +6,15 @@
     "import": "./index.mjs",
     "require": "./index.js"
   },
+  "bin": {
+    "purge-node-modules": "./bin/purge-node-modules"
+  },
   "engines": {
     "node": "^18.19.0 || >=20.6.0"
   },
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-cjs && npm run test-esm",
-    "test-cjs": "node ./test/test.cjs && rm -r ./test-dist",
-    "test-esm": "node ./test/test.mjs && rm -r ./test-dist"
+    "test": "node --test test/purge.test.mjs"
   },
   "repository": {
     "type": "git",
@@ -26,9 +27,7 @@
   },
   "homepage": "https://github.com/DLoT/module-purger#readme",
   "dependencies": {
-    "commander": "14.0.2",
     "fs-extra": "11.3.2",
-    "get-folder-size": "5.0.0",
     "glob": "13.0.0"
   },
   "devDependencies": {
