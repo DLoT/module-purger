@@ -20,11 +20,10 @@ const options = {
 
 const { values } = parseArgs({ options, allowPositionals: true });
 
-if (values.help) {
-  console.log(`
+const helpText = `
 Usage: purge-node-modules -t <path> -r <path> -e <path> [options]
 
-Removes the bloat from your node_modules
+Removes the bloat from your node modules
 
 Required:
   -t, --targetPath <path>       Directory where to put the result
@@ -36,7 +35,10 @@ Options:
   --exclude <paths>             Special paths to exclude, space-separated (quote multiple: "a b")
   --additionalModules <modules> Modules to load first. Helpful for runtime require (quote multiple: "a b")
   --excludeModules <modules>    Modules to exclude. Helpful for native modules and different architectures (quote multiple: "a b")
-  `);
+`
+
+if (values.help) {
+  console.log(helpText);
 
   process.exit(0);
 }
