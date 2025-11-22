@@ -20,13 +20,13 @@
   },
   "homepage": "https://github.com/DLoT/module-purger#readme",
   "dependencies": {
-    "commander": "^6.1.0",
-    "fs-extra": "^9.0.1",
-    "get-folder-size": "^2.0.1",
-    "glob": "^7.1.6"
+    "commander": "14.0.2",
+    "fs-extra": "11.3.2",
+    "get-folder-size": "5.0.0",
+    "glob": "13.0.0"
   },
   "devDependencies": {
     "@acme/example": "file:test/packages/acme-example-1.0.0.tgz",
-    "debug": "^4.2.0"
+    "debug": "4.4.3"
   }
 }
