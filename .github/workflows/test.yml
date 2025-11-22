@@ -10,20 +10,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # This forces the steps to run inside Alpine
-    container: node:${{ matrix.node-version }}-alpine
-
     strategy:
       matrix:
         node-version: [ 18, 20, 22 ]
 
     steps:
-      # Alpine is minimal, so we often need to install git for checkout to work perfectly
-      - name: Install prerequisites
-        run: apk add --no-cache git
-
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
